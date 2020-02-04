@@ -1,15 +1,9 @@
-package com.example.mynotesapp;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.example.consumerapp;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,11 +11,15 @@ import android.os.HandlerThread;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.mynotesapp.NoteHelper.MappingHelper;
-import com.example.mynotesapp.adapter.NoteAdapter;
-import com.example.mynotesapp.db.DatabaseContract;
-import com.example.mynotesapp.db.NoteHelper;
-import com.example.mynotesapp.entity.Note;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.consumerapp.NoteHelper.MappingHelper;
+import com.example.consumerapp.adapter.NoteAdapter;
+import com.example.consumerapp.db.DatabaseContract;
+import com.example.consumerapp.entity.Note;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
     private RecyclerView rvNotes;
     private NoteAdapter adapter;
     private FloatingActionButton fabAdd;
-    private NoteHelper noteHelper;
 
     private static final String EXTRA_STATE = "EXTRA_STATE";
 
@@ -44,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
         setContentView(R.layout.activity_main);
 
         if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle("Notes");
+            getSupportActionBar().setTitle("Consumer Notes");
         }
 
         progressBar = findViewById(R.id.progressbar);
@@ -88,12 +85,6 @@ public class MainActivity extends AppCompatActivity implements LoadNotesCallback
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(EXTRA_STATE, adapter.getLIstNotes());
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        noteHelper.close();
     }
 
     @Override

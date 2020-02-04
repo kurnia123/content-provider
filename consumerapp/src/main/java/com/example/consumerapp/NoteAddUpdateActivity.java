@@ -1,8 +1,4 @@
-package com.example.mynotesapp;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.consumerapp;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -18,19 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mynotesapp.NoteHelper.MappingHelper;
-import com.example.mynotesapp.db.NoteHelper;
-import com.example.mynotesapp.entity.Note;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.consumerapp.NoteHelper.MappingHelper;
+import com.example.consumerapp.entity.Note;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.example.mynotesapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
-import static com.example.mynotesapp.db.DatabaseContract.NoteColumns.TITLE;
-import static com.example.mynotesapp.db.DatabaseContract.NoteColumns.DESCRIPTIOn;
-import static com.example.mynotesapp.db.DatabaseContract.NoteColumns.DATE;
+import static com.example.consumerapp.db.DatabaseContract.NoteColumns.CONTENT_URI;
+import static com.example.consumerapp.db.DatabaseContract.NoteColumns.DATE;
+import static com.example.consumerapp.db.DatabaseContract.NoteColumns.DESCRIPTIOn;
+import static com.example.consumerapp.db.DatabaseContract.NoteColumns.TITLE;
 
 public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,7 +38,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
     private boolean isEdit = false;
     private Note note;
     private int position;
-    private NoteHelper noteHelper;
     private Uri uriWithId;
 
     public static final String EXTRA_NOTE = "extra_note";
@@ -60,8 +58,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
         edtTitle = findViewById(R.id.edt_title);
         edtDescription = findViewById(R.id.edt_description);
         btnSubmit = findViewById(R.id.btn_submit);
-
-        noteHelper = NoteHelper.getINstance(getApplicationContext());
 
         note = getIntent().getParcelableExtra(EXTRA_NOTE);
         if (note != null){
@@ -143,7 +139,6 @@ public class NoteAddUpdateActivity extends AppCompatActivity implements View.OnC
             } else {
                 note.setDate(getCurrentDate());
                 values.put(DATE, getCurrentDate());
-                long result = noteHelper.insert(values);
 
                 getContentResolver().insert(CONTENT_URI, values);
                 Toast.makeText(NoteAddUpdateActivity.this, "Satu item berhasil disimpan", Toast.LENGTH_SHORT).show();
